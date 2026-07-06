@@ -34,7 +34,7 @@ jobs:
         run: npm ci
 
       - name: Build static files
-        run: vite build
+        run: npm run build
         env:
           CI: false # Prevents warning logs from throwing errors
 
