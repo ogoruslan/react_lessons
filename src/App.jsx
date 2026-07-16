@@ -8,6 +8,7 @@ import MessageDemo from "./components/MessageDemo";
 import UploadForm from "./components/UploadForm";
 import FormStatusExample from "./components/FormStatusExample";
 import Thread from "./components/Thread";
+import LifeActComponent from "./components/LifeAct";
 
 const students = [
   { id: 1, name: "Alice Johnson", subject: "Mathematics", grade: "A" },
@@ -39,34 +40,14 @@ function App() {
 
   return (
     <>
-      <Thread messages={messages} sendMessage={sendMessage} />;
-      <FormStatusExample />
-      <UploadForm />
-      <main className="app-shell">
-        <section className="hero-panel">
-          <h1>Student Dashboard</h1>
-          <p>Welcome to the React lesson app.</p>
-        </section>
-
-        {/* <Students students={students} /> */}
-        <MessageDemo
-          state={[
-            { text: "Hello, World!", sending: true },
-            { text: "World!", sending: false },
-          ]}
-        />
-      </main>
-      <div>
-        {/* Умовний рендеринг компонента профілю */}
-        {showProfile && <Parent />}
-
-        {/* Кнопка для перемикання стану */}
-        <button onClick={toggleProfile}>
-          {showProfile ? "Приховати профіль" : "Показати профіль"}
-        </button>
-      </div>
+      <LifeActComponent id={1} />
+      {/* <Thread messages={messages} sendMessage={sendMessage} />; */}
+      {/* <FormStatusExample /> */}
+      {/* <UploadForm /> */}
+      
     </>
   );
 }
+
 
 export default App;
