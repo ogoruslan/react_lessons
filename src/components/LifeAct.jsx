@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import styles from "./LifeAct.module.css";
 
 // Приклад функціонального компонента з використанням хуків
 const LifeActComponent = ({ id: initialId }) => {
@@ -60,6 +61,7 @@ const LifeActComponent = ({ id: initialId }) => {
           value={id}
           onChange={handleIdChange}
           placeholder="Введіть ID користувача"
+          className={styles.test}
         />
       </div>
       <div>
