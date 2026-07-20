@@ -1,42 +1,62 @@
-import { useOptimistic, useState, useRef } from 'react';
+﻿import { useOptimistic, useState } from "react";
 
-// Компонент для відправлення повідомлень
-const Thread = ({ messages, sendMessage }) => {
-  const formRef = useRef();
+const initialMessages = [
+  { id: 1, text: "ривіт! Як справи?", sending: false },
+  { id: 2, text: "озпочинаємо навчання React", sending: false },
+];
 
-  // Функція для обробки відправлення форми
-  const formAction = async (formData) => {
-    const message = formData.get('message'); // Отримуємо текст повідомлення
-    addOptimisticMessage(message); // Оптимістично оновлюємо інтерфейс
-    formRef.current.reset(); // Очищуємо поле вводу
-    await sendMessage(formData); // Відправляємо повідомлення на сервер
-  };
+function Thread() {
+  const [messages, setMessages] = useState(initialMessages);
+  const [draft, setDraft] = useState("");
 
-  // Оптимістичне оновлення стану повідомлень
   const [optimisticMessages, addOptimisticMessage] = useOptimistic(
     messages,
-    (state, newMessage) => [
-      ...state,
-      { text: newMessage, sending: true }, // Додаємо нове повідомлення з прапорцем "sending"
-    ]
+    (currentMessages, newMessage) => [...currentMessages, newMessage],
   );
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const text = draft.trim();
+    if (!text) {
+      return;
+    }
+
+    const tempMessage = { id: Date.now(), text, sending: true };
+    addOptimisticMessage(tempMessage);
+    setDraft("");
+
+    await new Promise((resolve) => setTimeout(resolve, 800));
+
+    setMessages((prev) => [...prev, { ...tempMessage, sending: false }]);
+  };
 
   return (
-    <>
-      {optimisticMessages.map((message, index) => (
-        <div key={index}>
-          {message.text}
-          {message.sending && <small> (Sending...)</small>} {/* Відображаємо стан "Sending" */}
-        </div>
-      ))}
-      <form action={formAction} ref={formRef}>
-        <input type="text" name="message" placeholder="Hello!" />
-        <button type="submit">Send</button>
+    <div className="thread-card">
+      <h3>Тема для обговорення</h3>
+      <p>Тут можна відправляти повідомлення у стилі чат-стрічки.</p>
+
+      <div className="thread-list">
+        {optimisticMessages.map((message) => (
+          <div className="message-item" key={message.id}>
+            {message.text}
+            {message.sending && <small> (надсилається...)</small>}
+          </div>
+        ))}
+      </div>
+
+      <form onSubmit={handleSubmit} style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+        <input
+          type="text"
+          value={draft}
+          onChange={(event) => setDraft(event.target.value)}
+          placeholder="апишіть повідомлення"
+          style={{ flex: 1, minWidth: "220px" }}
+        />
+        <button type="submit">адіслати</button>
       </form>
-    </>
+    </div>
   );
-};
-
-
+}
 
 export default Thread;
