@@ -1,8 +1,11 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useContext } from "react";
 import { NavLink, Outlet, Route, Routes, useLocation } from "react-router-dom";
+
+import { AppContext } from "./context/AppContext";
 
 import "./App.css";
 import BlockerExample from "./components/BlockerExample";
+import ContextDemo from "./components/ContextDemo";
 import FormStatusExample from "./components/FormStatusExample";
 import LifeActComponent from "./components/LifeAct";
 import MessageDemo from "./components/MessageDemo";
@@ -26,6 +29,9 @@ function HomePage() {
         <li>Розуміти, як будувати прості UI-інтеракції.</li>
         <li>Побачити, як React допомагає структурувати навчальні приклади.</li>
       </ul>
+      <div className="students-section">
+        <ContextDemo />
+      </div>
     </section>
   );
 }
@@ -70,9 +76,11 @@ function ExamplesLayout() {
 
 function App() {
   const location = useLocation();
+  const { theme } = useContext(AppContext);
   console.log("Current location:", location);
+
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${theme === "dark" ? "theme-dark" : "theme-light"}`}>
       <nav className="top-nav">
         <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
           Мета навчання

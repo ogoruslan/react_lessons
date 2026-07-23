@@ -2,6 +2,46 @@
   max-width: 960px;
   margin: 0 auto;
   padding: 2rem 1rem 3rem;
+  min-height: 100vh;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.app-shell.theme-light {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.app-shell.theme-dark {
+  background: #020617;
+  color: #f8fafc;
+}
+
+.app-shell.theme-dark .page-card,
+.app-shell.theme-dark .profile-box,
+.app-shell.theme-dark .students-section,
+.app-shell.theme-dark .student-card,
+.app-shell.theme-dark .message-item,
+.app-shell.theme-dark .thread-list,
+.app-shell.theme-dark .form-status-box {
+  background: #111827;
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+.app-shell.theme-dark .nav-link {
+  color: #c7d2fe;
+}
+
+.app-shell.theme-dark .nav-link:hover,
+.app-shell.theme-dark .nav-link.active {
+  background: #312e81;
+  color: #ffffff;
+}
+
+.app-shell.theme-dark .page-intro,
+.app-shell.theme-dark .goals-list,
+.app-shell.theme-dark .form-card label {
+  color: #cbd5e1;
 }
 
 .top-nav {
