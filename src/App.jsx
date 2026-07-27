@@ -12,6 +12,7 @@ import MessageDemo from "./components/MessageDemo";
 import ParentComponent from "./components/Parent";
 import Thread from "./components/Thread";
 import UploadForm from "./components/UploadForm";
+import ReduxDemo from "./components/ReduxDemo";
 import { RouteErrorExample, ThrowingRouteComponent } from "./components/RouteErrorExample";
 
 const LazyExample = lazy(() => import("./components/LazyExample"));
@@ -112,6 +113,9 @@ function App() {
         <NavLink to="/lazy" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
           Lazy
         </NavLink>
+        <NavLink to="/redux" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+          Redux
+        </NavLink>
       </nav>
 
       <Routes>
@@ -122,6 +126,7 @@ function App() {
         <Route path="/upload" element={<section className="page-card"><UploadForm /></section>} />
         <Route path="/form-status" element={<section className="page-card"><FormStatusExample /></section>} />
         <Route path="/thread" element={<section className="page-card"><Thread /></section>} />
+        <Route path="/redux" element={<section className="page-card"><ReduxDemo /></section>} />
         <Route path="/examples" element={<ExamplesLayout />}>
           <Route index element={<BlockerExample />} />
           <Route path="blocker" element={<BlockerExample />} />
