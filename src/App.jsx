@@ -13,7 +13,10 @@ import ParentComponent from "./components/Parent";
 import Thread from "./components/Thread";
 import UploadForm from "./components/UploadForm";
 import ReduxDemo from "./components/ReduxDemo";
-import { RouteErrorExample, ThrowingRouteComponent } from "./components/RouteErrorExample";
+import {
+  RouteErrorExample,
+  ThrowingRouteComponent,
+} from "./components/RouteErrorExample";
 
 const LazyExample = lazy(() => import("./components/LazyExample"));
 
@@ -22,7 +25,8 @@ function HomePage() {
     <section className="page-card">
       <h1>Мета навчання студентів</h1>
       <p className="page-intro">
-        Цей проєкт допомагає студентам зрозуміти основи React через практичні приклади.
+        Цей проєкт допомагає студентам зрозуміти основи React через практичні
+        приклади.
       </p>
       <ul className="goals-list">
         <li>Освоїти компоненти та props.</li>
@@ -63,10 +67,16 @@ function ExamplesLayout() {
     <section className="page-card">
       <h2>Приклади React Router</h2>
       <nav className="sub-nav">
-        <NavLink to="/examples/blocker" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          to="/examples/blocker"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
           useBlocker
         </NavLink>
-        <NavLink to="/examples/child" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          to="/examples/child"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
           Дочірній маршрут
         </NavLink>
       </nav>
@@ -76,44 +86,77 @@ function ExamplesLayout() {
 }
 
 function App() {
-  const location = useLocation();
   const { theme } = useContext(AppContext);
-  console.log("Current location:", location);
 
   return (
-    <div className={`app-shell ${theme === "dark" ? "theme-dark" : "theme-light"}`}>
+    <div
+      className={`app-shell ${theme === "dark" ? "theme-dark" : "theme-light"}`}
+    >
       <nav className="top-nav">
-        <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          to="/"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
           Мета навчання
         </NavLink>
-        <NavLink to="/example" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          to="/example"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
           Приклад
         </NavLink>
-        <NavLink to="/parent" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          to="/parent"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
           Parent
         </NavLink>
-        <NavLink to="/messages" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          to="/messages"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
           Messages
         </NavLink>
-        <NavLink to="/upload" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          to="/upload"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
           Upload
         </NavLink>
-        <NavLink to="/form-status" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          to="/form-status"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
           Form Status
         </NavLink>
-        <NavLink to="/examples" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          to="/examples"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
           Examples
         </NavLink>
-        <NavLink to="/route-error" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          to="/route-error"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
           Route Error
         </NavLink>
-        <NavLink to="/thread" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          to="/thread"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
           Thread
         </NavLink>
-        <NavLink to="/lazy" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          to="/lazy"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
           Lazy
         </NavLink>
-        <NavLink to="/redux" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          to="/redux"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
           Redux
         </NavLink>
       </nav>
@@ -121,33 +164,85 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/example" element={<ExamplePage />} />
-        <Route path="/parent" element={<section className="page-card"><ParentComponent /></section>} />
-        <Route path="/messages" element={<section className="page-card"><MessageDemo /></section>} />
-        <Route path="/upload" element={<section className="page-card"><UploadForm /></section>} />
-        <Route path="/form-status" element={<section className="page-card"><FormStatusExample /></section>} />
-        <Route path="/thread" element={<section className="page-card"><Thread /></section>} />
-        <Route path="/redux" element={<section className="page-card"><ReduxDemo /></section>} />
+        <Route
+          path="/parent"
+          element={
+            <section className="page-card">
+              <ParentComponent />
+            </section>
+          }
+        />
+        <Route
+          path="/messages"
+          element={
+            <section className="page-card">
+              <MessageDemo />
+            </section>
+          }
+        />
+        <Route
+          path="/upload"
+          element={
+            <section className="page-card">
+              <UploadForm />
+            </section>
+          }
+        />
+        <Route
+          path="/form-status"
+          element={
+            <section className="page-card">
+              <FormStatusExample />
+            </section>
+          }
+        />
+        <Route
+          path="/thread"
+          element={
+            <section className="page-card">
+              <Thread />
+            </section>
+          }
+        />
+        <Route
+          path="/redux"
+          element={
+            <section className="page-card">
+              <ReduxDemo />
+            </section>
+          }
+        />
         <Route path="/examples" element={<ExamplesLayout />}>
           <Route index element={<BlockerExample />} />
           <Route path="blocker" element={<BlockerExample />} />
-          <Route path="child" element={<div className="component-card"><h3>Вкладений маршрут</h3><p>Це демонстрація дочірнього маршруту.</p></div>} />
+          <Route
+            path="child"
+            element={
+              <div className="component-card">
+                <h3>Вкладений маршрут</h3>
+                <p>Це демонстрація дочірнього маршруту.</p>
+              </div>
+            }
+          />
         </Route>
         <Route path="/route-error" element={<RouteErrorExample />} />
         <Route path="/route-error/throw" element={<ThrowingRouteComponent />} />
         <Route
           path="/lazy"
           element={
-            <Suspense fallback={<div className="page-card"><p>Завантаження компонента...</p></div>}>
+            <Suspense
+              fallback={
+                <div className="page-card">
+                  <p>Завантаження компонента...</p>
+                </div>
+              }
+            >
               <LazyExample />
             </Suspense>
           }
         />
-        <Route
-          path="*"
-          element={<NotFound />}
-        />
+        <Route path="*" element={<NotFound />} />
       </Routes>
-      
     </div>
   );
 }
