@@ -249,3 +249,70 @@ textarea {
   margin: 0.5rem 0 0;
   color: #be123c;
 }
+
+.form-shell {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.registration-form,
+.feedback-form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-group label,
+.checkbox-row {
+  font-weight: 600;
+  color: #334155;
+}
+
+.form-field {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-field:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.18);
+}
+
+.feedback-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+}
+
+.checkbox-row input {
+  width: auto;
+  margin: 0;
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.9rem;
+  margin-top: 0.15rem;
+}
+
+.submit-button {
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.25rem;
+}

@@ -13,6 +13,10 @@ import ParentComponent from "./components/Parent";
 import Thread from "./components/Thread";
 import UploadForm from "./components/UploadForm";
 import ReduxDemo from "./components/ReduxDemo";
+import MyForm from "./components/formik_advanced";
+import RegistrationForm from "./components/RegistrationForm";
+import FeedbackForm from "./components/FeedbackForm";
+import HookFormRegistration from "./components/HookFormRegistration";
 import {
   RouteErrorExample,
   ThrowingRouteComponent,
@@ -159,6 +163,30 @@ function App() {
         >
           Redux
         </NavLink>
+        <NavLink
+          to="/formik-advanced"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
+          Formik Advanced
+        </NavLink>
+        <NavLink
+          to="/register"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
+          Registration
+        </NavLink>
+        <NavLink
+          to="/feedback"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
+          Feedback
+        </NavLink>
+        <NavLink
+          to="/hook-form"
+          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+        >
+          Hook Form
+        </NavLink>
       </nav>
 
       <Routes>
@@ -209,6 +237,38 @@ function App() {
           element={
             <section className="page-card">
               <ReduxDemo />
+            </section>
+          }
+        />
+        <Route
+          path="/formik-advanced"
+          element={
+            <section className="page-card">
+              <MyForm />
+            </section>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <section className="page-card">
+              <RegistrationForm />
+            </section>
+          }
+        />
+        <Route
+          path="/feedback"
+          element={
+            <section className="page-card">
+              <FeedbackForm />
+            </section>
+          }
+        />
+        <Route
+          path="/hook-form"
+          element={
+            <section className="page-card">
+              <HookFormRegistration />
             </section>
           }
         />
