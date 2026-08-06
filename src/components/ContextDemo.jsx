@@ -1,15 +1,26 @@
-import { useContext } from "react";
-import { AppContext } from "../context/AppContext";
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
+import {
+  Box,
+  Button,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 function UserSummary() {
   const { selectedUserId, users } = useContext(AppContext);
   const selectedUser = users.find((user) => user.id === selectedUserId);
 
   return (
-    <div className="profile-box">
-      <h3>Обраний користувач</h3>
-      <p>{selectedUser ? `${selectedUser.name} — ${selectedUser.role}` : "Користувача не знайдено"}</p>
-    </div>
+    <Paper sx={{ p: 3, bgcolor: 'grey.50' }} elevation={1}>
+      <Typography variant="h6" gutterBottom>
+        Обраний користувач
+      </Typography>
+      <Typography>
+        {selectedUser ? `${selectedUser.name} — ${selectedUser.role}` : 'Користувача не знайдено'}
+      </Typography>
+    </Paper>
   );
 }
 
@@ -17,10 +28,14 @@ function ThemeSwitcher() {
   const { theme, toggleTheme } = useContext(AppContext);
 
   return (
-    <div className="profile-box">
-      <p>Поточна тема: <strong>{theme}</strong></p>
-      <button onClick={toggleTheme}>Змінити тему</button>
-    </div>
+    <Paper sx={{ p: 3, bgcolor: 'grey.50' }} elevation={1}>
+      <Typography variant="body1" paragraph>
+        Поточна тема: <strong>{theme}</strong>
+      </Typography>
+      <Button variant="contained" onClick={toggleTheme}>
+        Змінити тему
+      </Button>
+    </Paper>
   );
 }
 
@@ -28,19 +43,29 @@ function ContextDemo() {
   const { users, setSelectedUserId } = useContext(AppContext);
 
   return (
-    <div className="component-card">
-      <h3>Демонстрація контексту</h3>
-      <p>Дані надходять без пропсів — лише через контекст.</p>
-      <div className="students-grid">
-        {users.map((user) => (
-          <button key={user.id} onClick={() => setSelectedUserId(user.id)}>
-            {user.name}
-          </button>
-        ))}
-      </div>
-      <ThemeSwitcher />
-      <UserSummary />
-    </div>
+    <Paper sx={{ p: 4 }} elevation={3}>
+      <Typography variant="h4" gutterBottom>
+        Демонстрація контексту
+      </Typography>
+      <Typography variant="body1" color="text.secondary" paragraph>
+        Дані надходять без пропсів — лише через контекст.
+      </Typography>
+
+      <Box sx={{ mb: 3 }}>
+        <Stack direction="row" flexWrap="wrap" spacing={1}>
+          {users.map((user) => (
+            <Button key={user.id} variant="outlined" onClick={() => setSelectedUserId(user.id)}>
+              {user.name}
+            </Button>
+          ))}
+        </Stack>
+      </Box>
+
+      <Stack spacing={2}>
+        <ThemeSwitcher />
+        <UserSummary />
+      </Stack>
+    </Paper>
   );
 }
 

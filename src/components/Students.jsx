@@ -1,30 +1,61 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 function Students({ students }) {
   const [name, setName] = useState('Світ');
 
   return (
-    <section className="students-section">
-      <h1>{name}</h1>
-      <h2>Students</h2>
-      <p>Here is a simple React component showing student information.</p>
-      <div className="students-grid">
+    <Paper sx={{ p: 4 }} elevation={3}>
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="h4">{name}</Typography>
+        <Typography variant="h6" color="text.secondary">
+          Students
+        </Typography>
+        <Typography variant="body1" paragraph>
+          Here is a simple React component showing student information.
+        </Typography>
+      </Box>
+
+      <Grid container spacing={2} sx={{ mb: 3 }}>
         {students.map((student) => (
-          <article key={student.id} className="student-card">
-            <h3>{student.name}</h3>
-            <p>
-              <strong>Subject:</strong> {student.subject}
-            </p>
-            <p>
-              <strong>Grade:</strong> {student.grade}
-            </p>
-          </article>
+          <Grid item xs={12} sm={6} md={4} key={student.id}>
+            <Card variant="outlined">
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  {student.name}
+                </Typography>
+                <Typography>
+                  <strong>Subject:</strong> {student.subject}
+                </Typography>
+                <Typography>
+                  <strong>Grade:</strong> {student.grade}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
         ))}
-      </div>
-      <button onClick={() => setName('React Learner')}>Change Name</button>
-      <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter your name" />
-    </section>
-    
-  )
+      </Grid>
+
+      <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
+        <Button variant="contained" onClick={() => setName('React Learner')}>
+          Change Name
+        </Button>
+        <TextField
+          label="Enter your name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </Box>
+    </Paper>
+  );
 }
-export default Students
+export default Students;

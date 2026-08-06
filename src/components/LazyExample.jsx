@@ -1,14 +1,18 @@
+import { Box, Paper, Typography } from '@mui/material';
+
 function LazyExample() {
   return (
-    <section className="page-card">
-      <h2>Приклад lazy loading</h2>
-      <p className="page-intro">
+    <Paper sx={{ p: 4 }} elevation={3}>
+      <Typography variant="h4" gutterBottom>
+        Приклад lazy loading
+      </Typography>
+      <Typography variant="body1" color="text.secondary" paragraph>
         Цей компонент завантажується динамічно за допомогою React.lazy та Suspense.
-      </p>
-      <p>
+      </Typography>
+      <Typography>
         Lazy loading покращує час першого рендеру, завантажуючи код тільки тоді, коли він потрібен.
-      </p>
-    </section>
+      </Typography>
+    </Paper>
   );
 }
 

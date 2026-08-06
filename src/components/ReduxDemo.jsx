@@ -1,10 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import {
   decrement,
   fetchIncrementAsync,
   increment,
   reset,
-} from "../redux/store";
+} from '../redux/store';
+import {
+  Alert,
+  Box,
+  Button,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 function ReduxDemo() {
   const count = useSelector((state) => state.count);
@@ -13,27 +21,42 @@ function ReduxDemo() {
   const dispatch = useDispatch();
 
   return (
-    <div className="component-card">
-      <h3>Навчальний Redux</h3>
-      <p>
+    <Paper sx={{ p: 4 }} elevation={3}>
+      <Typography variant="h4" gutterBottom>
+        Навчальний Redux
+      </Typography>
+      <Typography variant="body1" color="text.secondary" paragraph>
         Цей приклад показує, як Redux зберігає стан у одному місці і оновлює
         його через actions.
-      </p>
-      <p style={{ fontSize: "1.5rem", fontWeight: 700 }}>Значення: {count}</p>
-      <p style={{ marginTop: 0, color: "#555" }}>Статус: {status}</p>
-      {error && <p style={{ color: "red" }}>Помилка: {error}</p>}
-      <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-        <button onClick={() => dispatch(increment())}>+1</button>
-        <button onClick={() => dispatch(decrement())}>-1</button>
-        <button
+      </Typography>
+
+      <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
+        Значення: {count}
+      </Typography>
+      <Typography variant="body2" color="text.secondary" paragraph>
+        Статус: {status}
+      </Typography>
+      {error && <Alert severity="error">Помилка: {error}</Alert>}
+
+      <Stack direction="row" spacing={2} flexWrap="wrap" sx={{ mt: 2 }}>
+        <Button variant="contained" onClick={() => dispatch(increment())}>
+          +1
+        </Button>
+        <Button variant="contained" onClick={() => dispatch(decrement())}>
+          -1
+        </Button>
+        <Button
+          variant="outlined"
           onClick={() => dispatch(fetchIncrementAsync())}
-          disabled={status === "loading"}
+          disabled={status === 'loading'}
         >
           Async +1
-        </button>
-        <button onClick={() => dispatch(reset())}>Скинути</button>
-      </div>
-    </div>
+        </Button>
+        <Button variant="outlined" onClick={() => dispatch(reset())}>
+          Скинути
+        </Button>
+      </Stack>
+    </Paper>
   );
 }
 

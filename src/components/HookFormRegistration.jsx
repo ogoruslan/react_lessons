@@ -1,6 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 const schema = z
   .object({
@@ -42,76 +50,64 @@ const HookFormRegistration = () => {
   };
 
   return (
-    <div className="form-shell">
-      <h2>Реєстрація через react-hook-form + zod</h2>
-      <p>
+    <Paper sx={{ p: 4, maxWidth: 560, mx: 'auto' }} elevation={3}>
+      <Typography variant="h4" component="h2" gutterBottom>
+        Реєстрація через react-hook-form + zod
+      </Typography>
+      <Typography variant="body1" color="text.secondary" paragraph>
         Ця форма показує, як з допомогою zod і react-hook-form робити
         валідацію даних перед відправкою.
-      </p>
-      <form onSubmit={handleSubmit(onSubmit)} className="registration-form">
-        <div className="form-group">
-          <label htmlFor="username">Ім&apos;я користувача</label>
-          <input
-            id="username"
-            type="text"
-            className="form-field"
-            placeholder="Введіть ім'я користувача"
-            aria-label="Ім'я користувача"
-            {...register('username')}
-          />
-          {errors.username && (
-            <p className="error-message">{errors.username.message}</p>
-          )}
-        </div>
+      </Typography>
 
-        <div className="form-group">
-          <label htmlFor="email">Електронна пошта</label>
-          <input
-            id="email"
-            type="email"
-            className="form-field"
-            placeholder="Введіть електронну пошту"
-            aria-label="Електронна пошта"
-            {...register('email')}
-          />
-          {errors.email && <p className="error-message">{errors.email.message}</p>}
-        </div>
+      <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ display: 'grid', gap: 2 }}>
+        <TextField
+          id="username"
+          label="Ім'я користувача"
+          placeholder="Введіть ім'я користувача"
+          fullWidth
+          error={!!errors.username}
+          helperText={errors.username?.message}
+          {...register('username')}
+        />
 
-        <div className="form-group">
-          <label htmlFor="password">Пароль</label>
-          <input
-            id="password"
-            type="password"
-            className="form-field"
-            placeholder="Введіть пароль"
-            aria-label="Пароль"
-            {...register('password')}
-          />
-          {errors.password && (
-            <p className="error-message">{errors.password.message}</p>
-          )}
-        </div>
+        <TextField
+          id="email"
+          label="Електронна пошта"
+          placeholder="Введіть електронну пошту"
+          fullWidth
+          type="email"
+          error={!!errors.email}
+          helperText={errors.email?.message}
+          {...register('email')}
+        />
 
-        <div className="form-group">
-          <label htmlFor="confirmPassword">Підтвердження пароля</label>
-          <input
-            id="confirmPassword"
-            type="password"
-            className="form-field"
-            placeholder="Повторіть пароль"
-            aria-label="Підтвердження пароля"
-            {...register('confirmPassword')}
-          />
-          {errors.confirmPassword && (
-            <p className="error-message">{errors.confirmPassword.message}</p>
-          )}
-        </div>
+        <TextField
+          id="password"
+          label="Пароль"
+          placeholder="Введіть пароль"
+          fullWidth
+          type="password"
+          error={!!errors.password}
+          helperText={errors.password?.message}
+          {...register('password')}
+        />
 
-        <button type="submit" className="submit-button" disabled={isSubmitting}>
-          {isSubmitting ? 'Реєстрація...' : 'Зареєструватися'}
-        </button>
-      </form>
-    </div>
+        <TextField
+          id="confirmPassword"
+          label="Підтвердження пароля"
+          placeholder="Повторіть пароль"
+          fullWidth
+          type="password"
+          error={!!errors.confirmPassword}
+          helperText={errors.confirmPassword?.message}
+          {...register('confirmPassword')}
+        />
+
+        <Button type="submit" variant="contained" size="large" disabled={isSubmitting}>
+          {isSubmitting ? <CircularProgress size={20} color="inherit" /> : 'Зареєструватися'}
+        </Button>
+      </Box>
+    </Paper>
   );
 };
 

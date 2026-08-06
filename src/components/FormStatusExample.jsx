@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { useState } from 'react';
+import {
+  Alert,
+  Box,
+  Button,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 function FormStatusExample() {
-  const [formData, setFormData] = useState({ name: "", email: "" });
-  const [message, setMessage] = useState("");
+  const [formData, setFormData] = useState({ name: '', email: '' });
+  const [message, setMessage] = useState('');
   const [isPending, setIsPending] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsPending(true);
-    setMessage("");
+    setMessage('');
 
     await new Promise((resolve) => setTimeout(resolve, 1200));
 
@@ -17,36 +25,45 @@ function FormStatusExample() {
   };
 
   return (
-    <div className="component-card">
-      <h3>Приклад форми з станом завантаження</h3>
-      <p>Форма симулює відправку даних і показує індикатор очікування.</p>
+    <Paper sx={{ p: 4 }} elevation={3}>
+      <Typography variant="h4" gutterBottom>
+        Приклад форми з станом завантаження
+      </Typography>
+      <Typography variant="body1" color="text.secondary" paragraph>
+        Форма симулює відправку даних і показує індикатор очікування.
+      </Typography>
 
-      <form onSubmit={handleSubmit} className="form-card">
-        <input
-          type="text"
+      <Box component="form" onSubmit={handleSubmit} sx={{ display: 'grid', gap: 2 }}>
+        <TextField
           name="name"
-          placeholder="Ваше ім&apos;я"
+          label="Ваше ім'я"
           value={formData.name}
           onChange={(event) => setFormData((prev) => ({ ...prev, name: event.target.value }))}
           required
+          fullWidth
         />
 
-        <input
-          type="email"
+        <TextField
           name="email"
-          placeholder="Ваш email"
+          label="Ваш email"
+          type="email"
           value={formData.email}
           onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
           required
+          fullWidth
         />
 
-        <button type="submit" disabled={isPending}>
-          {isPending ? "Надсилаємо..." : "Надіслати"}
-        </button>
-      </form>
+        <Button type="submit" variant="contained" disabled={isPending} size="large">
+          {isPending ? 'Надсилаємо...' : 'Надіслати'}
+        </Button>
+      </Box>
 
-      {message && <div className="form-status-box">{message}</div>}
-    </div>
+      {message && (
+        <Alert severity="success" sx={{ mt: 3 }}>
+          {message}
+        </Alert>
+      )}
+    </Paper>
   );
 }
 

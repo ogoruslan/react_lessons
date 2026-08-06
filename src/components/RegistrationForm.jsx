@@ -1,12 +1,21 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
   acceptTerms: false,
 };
 
@@ -26,70 +35,117 @@ const validationSchema = Yup.object({
     .min(6, "Пароль має містити щонайменше 6 символів")
     .required("Обов'язкове поле"),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Паролі мають співпадати")
+    .oneOf([Yup.ref('password'), null], "Паролі мають співпадати")
     .required("Обов'язкове поле"),
   acceptTerms: Yup.boolean().oneOf([true], "Потрібно прийняти умови"),
 });
 
 function RegistrationForm() {
   return (
-    <div className="form-shell">
-      <h2>Форма реєстрації</h2>
-      <p>Заповніть дані, щоб створити акаунт.</p>
+    <Paper sx={{ p: 4, maxWidth: 600, mx: 'auto' }} elevation={3}>
+      <Typography variant="h4" gutterBottom>
+        Форма реєстрації
+      </Typography>
+      <Typography variant="body1" color="text.secondary" paragraph>
+        Заповніть дані, щоб створити акаунт.
+      </Typography>
+
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(values, { resetForm }) => {
-          console.log("Registration data:", values);
+          console.log('Registration data:', values);
           alert(`Реєстрацію успішно створено для ${values.email}`);
           resetForm();
         }}
-      >
-        {({ isSubmitting }) => (
-          <Form className="registration-form">
-            <div className="form-group">
-              <label htmlFor="firstName">Ім'я</label>
-              <Field id="firstName" name="firstName" type="text" className="form-field" />
-              <ErrorMessage name="firstName" component="div" className="error-message" />
-            </div>
+      >{({ values, errors, touched, handleChange, handleBlur, isSubmitting }) => (
+        <Box component={Form} sx={{ display: 'grid', gap: 2 }}>
+          <TextField
+            id="firstName"
+            name="firstName"
+            label="Ім'я"
+            value={values.firstName}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.firstName && Boolean(errors.firstName)}
+            helperText={touched.firstName && errors.firstName}
+            fullWidth
+          />
 
-            <div className="form-group">
-              <label htmlFor="lastName">Прізвище</label>
-              <Field id="lastName" name="lastName" type="text" className="form-field" />
-              <ErrorMessage name="lastName" component="div" className="error-message" />
-            </div>
+          <TextField
+            id="lastName"
+            name="lastName"
+            label="Прізвище"
+            value={values.lastName}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.lastName && Boolean(errors.lastName)}
+            helperText={touched.lastName && errors.lastName}
+            fullWidth
+          />
 
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <Field id="email" name="email" type="email" className="form-field" />
-              <ErrorMessage name="email" component="div" className="error-message" />
-            </div>
+          <TextField
+            id="email"
+            name="email"
+            label="Email"
+            type="email"
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.email && Boolean(errors.email)}
+            helperText={touched.email && errors.email}
+            fullWidth
+          />
 
-            <div className="form-group">
-              <label htmlFor="password">Пароль</label>
-              <Field id="password" name="password" type="password" className="form-field" />
-              <ErrorMessage name="password" component="div" className="error-message" />
-            </div>
+          <TextField
+            id="password"
+            name="password"
+            label="Пароль"
+            type="password"
+            value={values.password}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.password && Boolean(errors.password)}
+            helperText={touched.password && errors.password}
+            fullWidth
+          />
 
-            <div className="form-group">
-              <label htmlFor="confirmPassword">Підтвердження пароля</label>
-              <Field id="confirmPassword" name="confirmPassword" type="password" className="form-field" />
-              <ErrorMessage name="confirmPassword" component="div" className="error-message" />
-            </div>
+          <TextField
+            id="confirmPassword"
+            name="confirmPassword"
+            label="Підтвердження пароля"
+            type="password"
+            value={values.confirmPassword}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+            helperText={touched.confirmPassword && errors.confirmPassword}
+            fullWidth
+          />
 
-            <label className="checkbox-row">
-              <Field type="checkbox" name="acceptTerms" />
-              Я приймаю умови користування
-            </label>
-            <ErrorMessage name="acceptTerms" component="div" className="error-message" />
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="acceptTerms"
+                checked={values.acceptTerms}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            }
+            label="Я приймаю умови користування"
+          />
+          {touched.acceptTerms && errors.acceptTerms && (
+            <Typography variant="body2" color="error">
+              {errors.acceptTerms}
+            </Typography>
+          )}
 
-            <button type="submit" className="submit-button" disabled={isSubmitting}>
-              {isSubmitting ? "Обробка..." : "Зареєструватися"}
-            </button>
-          </Form>
-        )}
-      </Formik>
-    </div>
+          <Button type="submit" variant="contained" disabled={isSubmitting} size="large">
+            {isSubmitting ? 'Обробка...' : 'Зареєструватися'}
+          </Button>
+        </Box>
+      )}</Formik>
+    </Paper>
   );
 }
 

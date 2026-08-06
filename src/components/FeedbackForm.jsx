@@ -1,7 +1,13 @@
 import { object, string } from 'yup';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
+import {
+  Box,
+  Button,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
 
-// Схема валідації форми відгуків
 const feedbackSchema = object().shape({
   name: string()
     .trim()
@@ -13,14 +19,12 @@ const feedbackSchema = object().shape({
   feedback: string()
     .trim()
     .min(10, 'Відгук повинен містити щонайменше 10 символів')
-    .required('Текст відгуку є обов\'язковим')
+    .required('Текст відгуку є обов\'язковим'),
 });
 
 const FeedbackForm = () => {
-  // Обробник відправки форми
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      // Імітація відправки даних на сервер
       await new Promise(resolve => setTimeout(resolve, 1000));
       console.log('Дані форми:', values);
       resetForm();
@@ -34,79 +38,69 @@ const FeedbackForm = () => {
   };
 
   return (
-    <Formik
-      initialValues={{
-        name: '',
-        email: '',
-        feedback: ''
-      }}
-      validationSchema={feedbackSchema}
-      onSubmit={handleSubmit}
-    >
-      {({ isSubmitting }) => (
-        <Form className="feedback-form">
-          <div className="form-group">
-            <label htmlFor="name">Ім'я</label>
-            <Field
-              id="name"
-              type="text"
-              name="name"
-              className="form-field"
-              placeholder="Введіть ваше ім'я"
-              aria-label="Ім'я"
-            />
-            <ErrorMessage
-              name="name"
-              component="div"
-              className="error-message"
-            />
-          </div>
+    <Paper sx={{ p: 4, maxWidth: 600, mx: 'auto' }} elevation={3}>
+      <Typography variant="h4" gutterBottom>
+        Залишіть відгук
+      </Typography>
+      <Typography variant="body1" color="text.secondary" paragraph>
+        Ми цінуємо вашу думку — напишіть короткий відгук про проєкт.
+      </Typography>
 
-          <div className="form-group">
-            <label htmlFor="email">Електронна пошта</label>
-            <Field
-              id="email"
-              type="email"
-              name="email"
-              className="form-field"
-              placeholder="Введіть вашу електронну пошту"
-              aria-label="Електронна пошта"
-            />
-            <ErrorMessage
-              name="email"
-              component="div"
-              className="error-message"
-            />
-          </div>
+      <Formik
+        initialValues={{
+          name: '',
+          email: '',
+          feedback: '',
+        }}
+        validationSchema={feedbackSchema}
+        onSubmit={handleSubmit}
+      >{({ values, errors, touched, handleChange, handleBlur, isSubmitting }) => (
+        <Box component={Form} sx={{ display: 'grid', gap: 2 }}>
+          <TextField
+            id="name"
+            name="name"
+            label="Ім'я"
+            value={values.name}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.name && Boolean(errors.name)}
+            helperText={touched.name && errors.name}
+            fullWidth
+          />
 
-          <div className="form-group">
-            <label htmlFor="feedback">Відгук</label>
-            <Field
-              id="feedback"
-              as="textarea"
-              name="feedback"
-              className="form-field feedback-textarea"
-              placeholder="Напишіть ваш відгук"
-              aria-label="Текст відгуку"
-              rows="4"
-            />
-            <ErrorMessage
-              name="feedback"
-              component="div"
-              className="error-message"
-            />
-          </div>
+          <TextField
+            id="email"
+            name="email"
+            label="Електронна пошта"
+            type="email"
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.email && Boolean(errors.email)}
+            helperText={touched.email && errors.email}
+            fullWidth
+          />
 
-          <button
-            type="submit"
-            className="submit-button"
-            disabled={isSubmitting}
-          >
+          <TextField
+            id="feedback"
+            name="feedback"
+            label="Відгук"
+            value={values.feedback}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.feedback && Boolean(errors.feedback)}
+            helperText={touched.feedback && errors.feedback}
+            fullWidth
+            multiline
+            rows={4}
+          />
+
+          <Button type="submit" variant="contained" disabled={isSubmitting} size="large">
             {isSubmitting ? 'Відправка...' : 'Надіслати відгук'}
-          </button>
-        </Form>
-      )}
-    </Formik>
+          </Button>
+        </Box>
+      )}</Formik>
+    </Paper>
   );
 };
 

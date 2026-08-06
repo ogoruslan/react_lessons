@@ -1,32 +1,45 @@
-import { useState } from "react";
+import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 function ParentComponent() {
   const [isOpen, setIsOpen] = useState(true);
   const [likes, setLikes] = useState(0);
 
   return (
-    <div className="component-card">
-      <h3>Батьківський компонент</h3>
-      <p>Цей приклад показує, як стан і події працюють у батьківському компоненті.</p>
+    <Paper sx={{ p: 4 }} elevation={3}>
+      <Typography variant="h4" gutterBottom>
+        Батьківський компонент
+      </Typography>
+      <Typography variant="body1" color="text.secondary" paragraph>
+        Цей приклад показує, як стан і події працюють у батьківському компоненті.
+      </Typography>
 
-      <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-        <button onClick={() => setIsOpen((prev) => !prev)}>
-          {isOpen ? "Сховати" : "Показати"} профіль
-        </button>
-        <button onClick={() => setLikes((prev) => prev + 1)}>
+      <Stack direction="row" spacing={2} flexWrap="wrap" sx={{ mb: 3 }}>
+        <Button variant="contained" onClick={() => setIsOpen((prev) => !prev)}>
+          {isOpen ? 'Сховати' : 'Показати'} профіль
+        </Button>
+        <Button variant="outlined" onClick={() => setLikes((prev) => prev + 1)}>
           Лайків: {likes}
-        </button>
-      </div>
+        </Button>
+      </Stack>
 
       {isOpen && (
-        <div className="profile-box">
-          <h4>Профіль користувача</h4>
-          <p>Ім&apos;я: Олександр</p>
-          <p>Курс: React для початківців</p>
-          <p>Статус: вивчає state та props</p>
-        </div>
+        <Paper sx={{ p: 3, bgcolor: 'grey.50' }} elevation={1}>
+          <Typography variant="h6" gutterBottom>
+            Профіль користувача
+          </Typography>
+          <Typography>Ім&apos;я: Олександр</Typography>
+          <Typography>Курс: React для початківців</Typography>
+          <Typography>Статус: вивчає state та props</Typography>
+        </Paper>
       )}
-    </div>
+    </Paper>
   );
 }
 

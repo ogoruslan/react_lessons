@@ -1,13 +1,25 @@
-﻿import { useOptimistic, useState } from "react";
+﻿import { useOptimistic, useState } from 'react';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  List,
+  ListItem,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 const initialMessages = [
-  { id: 1, text: "ривіт! Як справи?", sending: false },
-  { id: 2, text: "озпочинаємо навчання React", sending: false },
+  { id: 1, text: 'ривіт! Як справи?', sending: false },
+  { id: 2, text: 'озпочинаємо навчання React', sending: false },
 ];
 
 function Thread() {
   const [messages, setMessages] = useState(initialMessages);
-  const [draft, setDraft] = useState("");
+  const [draft, setDraft] = useState('');
 
   const [optimisticMessages, addOptimisticMessage] = useOptimistic(
     messages,
@@ -24,7 +36,7 @@ function Thread() {
 
     const tempMessage = { id: Date.now(), text, sending: true };
     addOptimisticMessage(tempMessage);
-    setDraft("");
+    setDraft('');
 
     await new Promise((resolve) => setTimeout(resolve, 800));
 
@@ -32,30 +44,45 @@ function Thread() {
   };
 
   return (
-    <div className="thread-card">
-      <h3>Тема для обговорення</h3>
-      <p>Тут можна відправляти повідомлення у стилі чат-стрічки.</p>
+    <Paper sx={{ p: 4 }} elevation={3}>
+      <Typography variant="h4" gutterBottom>
+        Тема для обговорення
+      </Typography>
+      <Typography variant="body1" color="text.secondary" paragraph>
+        Тут можна відправляти повідомлення у стилі чат-стрічки.
+      </Typography>
 
-      <div className="thread-list">
-        {optimisticMessages.map((message) => (
-          <div className="message-item" key={message.id}>
-            {message.text}
-            {message.sending && <small> (надсилається...)</small>}
-          </div>
-        ))}
-      </div>
+      <Card variant="outlined" sx={{ mb: 3 }}>
+        <CardContent>
+          <List>
+            {optimisticMessages.map((message) => (
+              <ListItem key={message.id} sx={{ bgcolor: 'grey.50', borderRadius: 1, mb: 1 }}>
+                <Box>
+                  <Typography>{message.text}</Typography>
+                  {message.sending && (
+                    <Typography variant="caption" color="text.secondary">
+                      (надсилається...)
+                    </Typography>
+                  )}
+                </Box>
+              </ListItem>
+            ))}
+          </List>
+        </CardContent>
+      </Card>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-        <input
-          type="text"
+      <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+        <TextField
+          fullWidth
           value={draft}
           onChange={(event) => setDraft(event.target.value)}
-          placeholder="апишіть повідомлення"
-          style={{ flex: 1, minWidth: "220px" }}
+          placeholder="Напишіть повідомлення"
         />
-        <button type="submit">адіслати</button>
-      </form>
-    </div>
+        <Button type="submit" variant="contained" size="large">
+          Надіслати
+        </Button>
+      </Box>
+    </Paper>
   );
 }
 

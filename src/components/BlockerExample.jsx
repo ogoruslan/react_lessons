@@ -1,17 +1,27 @@
-import { useState } from "react";
-import { useBlocker } from "react-router-dom";
+import { useState } from 'react';
+import { useBlocker } from 'react-router-dom';
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 function BlockerExample() {
   const initialForm = {
-    title: "",
-    notes: "",
+    title: '',
+    notes: '',
     agree: false,
   };
 
   const [form, setForm] = useState(initialForm);
   const isDirty =
-    form.title.trim() !== "" ||
-    form.notes.trim() !== "" ||
+    form.title.trim() !== '' ||
+    form.notes.trim() !== '' ||
     form.agree;
 
   const blocker = useBlocker(() => isDirty);
@@ -20,7 +30,7 @@ function BlockerExample() {
     const { name, value, type, checked } = event.target;
     setForm((current) => ({
       ...current,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
@@ -29,64 +39,67 @@ function BlockerExample() {
   };
 
   return (
-    <div className="component-card">
-      <h3>useBlocker: збережіть зміни перед переходом</h3>
-      <p className="page-intro">
+    <Paper sx={{ p: 4 }} elevation={3}>
+      <Typography variant="h4" gutterBottom>
+        useBlocker: збережіть зміни перед переходом
+      </Typography>
+      <Typography variant="body1" color="text.secondary" paragraph>
         Заповніть форму, а потім спробуйте перейти на іншу сторінку. React Router не дозволить
         покинути сторінку, доки ви не підтвердите або не скасуєте зміну.
-      </p>
+      </Typography>
 
-      <div className="form-card">
-        <label>
-          <span>Назва</span>
-          <input
-            name="title"
-            value={form.title}
-            onChange={handleChange}
-            placeholder="Введіть назву"
-          />
-        </label>
+      <Stack spacing={3}>
+        <TextField
+          label="Назва"
+          name="title"
+          value={form.title}
+          onChange={handleChange}
+          placeholder="Введіть назву"
+          fullWidth
+        />
 
-        <label>
-          <span>Коментар</span>
-          <textarea
-            name="notes"
-            value={form.notes}
-            onChange={handleChange}
-            rows={4}
-            placeholder="Опишіть свій стан"
-          />
-        </label>
+        <TextField
+          label="Коментар"
+          name="notes"
+          value={form.notes}
+          onChange={handleChange}
+          placeholder="Опишіть свій стан"
+          fullWidth
+          multiline
+          rows={4}
+        />
 
-        <label className="checkbox-row">
-          <input name="agree" type="checkbox" checked={form.agree} onChange={handleChange} />
-          <span>Підтверджую, що хочу залишити ці зміни</span>
-        </label>
+        <FormControlLabel
+          control={<Checkbox name="agree" checked={form.agree} onChange={handleChange} />}
+          label="Підтверджую, що хочу залишити ці зміни"
+        />
 
-        <div className="blocker-actions">
-          <button type="button" onClick={handleReset}>
+        <Stack direction="row" spacing={2} flexWrap="wrap">
+          <Button variant="contained" onClick={handleReset}>
             Скинути
-          </button>
-          <button type="button" className="secondary-button" disabled>
+          </Button>
+          <Button variant="outlined" disabled>
             Зберегти
-          </button>
-        </div>
-      </div>
+          </Button>
+        </Stack>
+      </Stack>
 
-      {blocker.state === "blocked" && (
-        <div className="blocker-dialog">
-          <p>У вас є незбережені зміни. Продовжити перехід?</p>
-          <div className="blocker-actions">
-            <button type="button" onClick={() => blocker.proceed()}>
+      {blocker.state === 'blocked' && (
+        <Paper sx={{ p: 3, mt: 4, bgcolor: 'warning.lighter' }} elevation={1}>
+          <Typography variant="body1" gutterBottom>
+            У вас є незбережені зміни. Продовжити перехід?
+          </Typography>
+          <Stack direction="row" spacing={2} flexWrap="wrap">
+            <Button variant="contained" onClick={() => blocker.proceed()}>
               Так, продовжити
-            </button>
-            <button type="button" className="secondary-button" onClick={() => blocker.reset()}>
+            </Button>
+            <Button variant="outlined" onClick={() => blocker.reset()}>
               Залишитися тут
-            </button>
-          </div>
-        </div>
+            </Button>
+          </Stack>
+        </Paper>
       )}
-    </div>
+    </Paper>
   );
 }
 

@@ -1,13 +1,23 @@
-import { useOptimistic, useState } from "react";
+import { useOptimistic, useState } from 'react';
+import {
+  Box,
+  Button,
+  List,
+  ListItem,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 const initialMessages = [
-  { id: 1, text: "Ласкаво просимо до демонстрації повідомлень", sending: false },
-  { id: 2, text: "Це приклад оптимістичного оновлення", sending: false },
+  { id: 1, text: 'Ласкаво просимо до демонстрації повідомлень', sending: false },
+  { id: 2, text: 'Це приклад оптимістичного оновлення', sending: false },
 ];
 
 function MessageDemo() {
   const [messages, setMessages] = useState(initialMessages);
-  const [draft, setDraft] = useState("");
+  const [draft, setDraft] = useState('');
 
   const [optimisticMessages, addOptimisticMessage] = useOptimistic(
     messages,
@@ -24,7 +34,7 @@ function MessageDemo() {
 
     const tempMessage = { id: Date.now(), text, sending: true };
     addOptimisticMessage(tempMessage);
-    setDraft("");
+    setDraft('');
 
     await new Promise((resolve) => setTimeout(resolve, 700));
 
@@ -32,30 +42,37 @@ function MessageDemo() {
   };
 
   return (
-    <div className="component-card">
-      <h3>Демо повідомлень</h3>
-      <p>Після відправки повідомлення спочатку з&apos;являється оптимістичний стан, а потім він фіксується.</p>
+    <Paper sx={{ p: 4 }} elevation={3}>
+      <Typography variant="h4" gutterBottom>
+        Демо повідомлень
+      </Typography>
+      <Typography variant="body1" color="text.secondary" paragraph>
+        Після відправки повідомлення спочатку з&apos;являється оптимістичний стан, а потім він фіксується.
+      </Typography>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-        <input
-          type="text"
+      <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 3 }}>
+        <TextField
+          fullWidth
           value={draft}
           onChange={(event) => setDraft(event.target.value)}
           placeholder="Напишіть повідомлення"
-          style={{ minWidth: "220px", flex: 1 }}
         />
-        <button type="submit">Надіслати</button>
-      </form>
+        <Button type="submit" variant="contained" size="large">
+          Надіслати
+        </Button>
+      </Box>
 
-      <div className="message-list">
+      <List>
         {optimisticMessages.map((message) => (
-          <div className="message-item" key={message.id}>
-            {message.text}
-            {message.sending && <small> (відправляється...)</small>}
-          </div>
+          <ListItem key={message.id} sx={{ bgcolor: 'grey.50', borderRadius: 2, mb: 1 }}>
+            <Typography>
+              {message.text}
+              {message.sending && <Typography component="span" color="text.secondary"> (відправляється...)</Typography>}
+            </Typography>
+          </ListItem>
         ))}
-      </div>
-    </div>
+      </List>
+    </Paper>
   );
 }
 
